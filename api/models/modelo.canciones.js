@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../../src/database/config");
+const playlist = require("./modelo.playlist");
 
 // Modelo de canciones
 const canciones = sequelize.define(
@@ -9,6 +10,10 @@ const canciones = sequelize.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
+    },
+    id_playlist: {
+      type: DataTypes.INTEGER,
+      defaultValue: true,
     },
     nombre_cancion: {
       type: DataTypes.STRING(100),
@@ -25,6 +30,9 @@ const canciones = sequelize.define(
     tableName: "Canciones",
   }
 );
+
+canciones.belongsTo(playlist, { foreignKey: "id_playlist" });
+
 canciones.sync({ force: true }).then(() => {
   console.log("Tabla de Canciones creada");
 });

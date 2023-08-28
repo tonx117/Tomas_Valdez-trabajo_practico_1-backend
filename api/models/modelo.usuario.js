@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require("../../src/database/config");
 
 // Modelo de Usuario
+
 const usuario = sequelize.define(
   "Usuario",
   {
@@ -48,6 +49,7 @@ const usuario = sequelize.define(
     tableName: "usuario",
   }
 );
+
 usuario.sync({ force: false }).then(() => {
   console.log("Tabla de Usuario creada");
 });

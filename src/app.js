@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //rutas
 app.use("/", require("../api/routes/usuario.routes"));
+app.use("/canciones", require("../api/routes/canciones.routes"));
 
 app.use((req, res, next) => {
   res.status(404).send("Error 404");

@@ -27,7 +27,7 @@ usuarioctrl.show = async (req, res) => {
     if (!Usuario) {
       throw {
         status: 404,
-        message: "No existe la reserva con el id " + UsuarioId,
+        message: "No existe el usuario con el id " + UsuarioId,
       };
     }
 
@@ -40,7 +40,7 @@ usuarioctrl.show = async (req, res) => {
 };
 
 usuarioctrl.store = async (req, res) => {
-  const { nombre_usuario, correo, contraseña } = req.body; // Asegúrate de tener el campo "apellido" en la solicitud
+  const { nombre_usuario, correo, contraseña } = req.body;
 
   try {
     const Usuario = await usuario.create({

@@ -2,14 +2,14 @@ const playlistctrl = require("../controllers/controladores.playlist");
 
 const router = require("express").Router();
 
-router.get("/playlist", playlistctrl.index);
+router.get("/", playlistctrl.index);
 
-router.post("/playlist", playlistctrl.store);
+router.post("/", playlistctrl.store);
 
-router.get("/playlist/:id", playlistctrl.show);
+router.get("/:id", playlistctrl.show);
 
-router.put("/playlist/:id", playlistctrl.update);
+router.put("/:id", playlistctrl.update);
 
-router.delete("/playlist/:id", playlistctrl.destroy);
+router.delete("/:id", playlistctrl.destroy);
 
 module.exports = router;

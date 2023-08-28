@@ -40,10 +40,11 @@ cancionesctrl.show = async (req, res) => {
 };
 
 cancionesctrl.store = async (req, res) => {
-  const { nombre_canciones } = req.body;
+  const { nombre_canciones, id_playlist } = req.body;
 
   try {
     const Canciones = await canciones.create({
+      id_playlist,
       nombre_canciones,
     });
 

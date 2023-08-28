@@ -1,16 +1,16 @@
-const playlist = require("../models/modelo.playlist");
+const Playlist = require("../models/modelo.playlist");
 const playlistctrl = {};
 
 playlistctrl.index = async (_req, res) => {
   try {
-    const Playlist = await playlist.findAll();
-    if (!Playlist || Playlist.length === 0) {
+    const playlist = await Playlist.findAll();
+    if (!playlist || playlist.length === 0) {
       throw {
         status: 404,
         message: "No tienes una Playlist aún.",
       };
     }
-    return res.json(Playlist);
+    return res.json(playlist);
   } catch (error) {
     return res.status(error.status || 500).json({
       message: error.message || "Error interno del servidor",
@@ -19,19 +19,23 @@ playlistctrl.index = async (_req, res) => {
 };
 
 playlistctrl.show = async (req, res) => {
-  const PlaylistId = req.params.id;
-
   try {
-    const Playlist = await playlist.findByPk(PlaylistId);
+    const playlistId = req.params.id;
+    const playlist = await Playlist.findByPk(playlistId, {
+      include: [
+        { model: User, attributes: ["id", "username", "email"] },
+        { model: Song },
+      ],
+    });
 
-    if (!Playlist) {
+    if (!playlist) {
       throw {
         status: 404,
-        message: "No existe la Playlist con el id " + PlaylistId,
+        message: "No existe la Playlist con el id " + playlistId,
       };
     }
 
-    return res.json(Playlist);
+    return res.json(playlist);
   } catch (error) {
     return res
       .status(error.status || 500)
@@ -40,21 +44,21 @@ playlistctrl.show = async (req, res) => {
 };
 
 playlistctrl.store = async (req, res) => {
-  const { nombre_Playlist } = req.body;
+  const { nombre_playlist } = req.body;
 
   try {
-    const Playlist = await playlist.create({
-      nombre_Playlist,
+    const playlist = await Playlist.create({
+      nombre_playlist,
     });
 
-    if (!Playlist) {
+    if (!playlist) {
       throw {
         status: 400,
         message: "No se pudo crear la Playlist.",
       };
     }
 
-    return res.json(Playlist);
+    return res.json(playlist);
   } catch (error) {
     return res
       .status(error.status || 500)
@@ -63,14 +67,14 @@ playlistctrl.store = async (req, res) => {
 };
 
 playlistctrl.update = async (req, res) => {
-  const PlaylistId = req.params.id;
+  const playlistId = req.params.id;
   const { nombre_Playlist } = req.body;
   try {
-    const Playlist = await playlist.findByPk(PlaylistId);
-    await Playlist.update({
+    const playlist = await Playlist.findByPk(playlistId);
+    await playlist.update({
       nombre_Playlist,
     });
-    return res.json(Playlist);
+    return res.json(playlist);
   } catch (error) {
     return res
       .status(error.status || 500)
@@ -79,13 +83,13 @@ playlistctrl.update = async (req, res) => {
 };
 
 playlistctrl.destroy = async (req, res) => {
-  const PlaylistId = req.params.id;
+  const playlistId = req.params.id;
 
   try {
-    const nombreplaylist = await playlist.findByPk(PlaylistId);
-    await playlist.destroy({
+    const nombreplaylist = await Playlist.findByPk(playlistId);
+    await Playlist.destroy({
       where: {
-        id: PlaylistId,
+        id: playlistId,
       },
     });
 

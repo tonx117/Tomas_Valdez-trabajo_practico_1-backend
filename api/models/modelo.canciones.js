@@ -12,7 +12,6 @@ const canciones = sequelize.define(
     },
     id_playlist: {
       type: DataTypes.INTEGER,
-      references: { model: playlist, key: "id_playlist" },
     },
     nombre_cancion: {
       type: DataTypes.STRING(100),

@@ -13,14 +13,9 @@ const playlist = sequelize.define(
     },
     id_usuario: {
       type: DataTypes.INTEGER,
-      references: { model: usuario, key: "id_usuario" },
     },
     nombre_playlist: {
       type: DataTypes.STRING(100),
-      allowNull: false,
-    },
-    cantidad_canciones: {
-      type: DataTypes.INTEGER,
       allowNull: false,
     },
     createdAt: {

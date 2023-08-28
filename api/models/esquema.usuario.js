@@ -1,6 +1,6 @@
-import { checkSchema } from "express-validator";
+const { checkSchema } = require("express-validator");
 
-export const createUserSchema = checkSchema({
+const createUserSchema = checkSchema({
   correo: {
     errorMessage: "correo invalido",
     isEmail: true,
@@ -8,7 +8,9 @@ export const createUserSchema = checkSchema({
   contraseña: {
     isLength: {
       options: { min: 8 },
-      errorMessage: "la contraseña deberia ser de almenos 8 caracteres",
+      errorMessage: "la contraseña debería ser de al menos 8 caracteres",
     },
   },
 });
+
+module.exports = createUserSchema;

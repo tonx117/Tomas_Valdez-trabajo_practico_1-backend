@@ -7,7 +7,7 @@ cancionesctrl.index = async (_req, res) => {
     if (!Canciones || Canciones.length === 0) {
       throw {
         status: 404,
-        message: "No estas registrado aún.",
+        message: "no tienes canciones aun.",
       };
     }
     return res.json(Canciones);

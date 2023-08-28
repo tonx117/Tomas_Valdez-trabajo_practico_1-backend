@@ -17,7 +17,7 @@ playlistctrl.index = async (_req, res) => {
     });
   }
 };
-// Obtener una reserva
+
 playlistctrl.show = async (req, res) => {
   const PlaylistId = req.params.id;
 

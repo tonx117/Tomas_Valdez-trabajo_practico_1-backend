@@ -17,7 +17,7 @@ usuarioctrl.index = async (_req, res) => {
     });
   }
 };
-// Obtener una reserva
+
 usuarioctrl.show = async (req, res) => {
   const UsuarioId = req.params.id;
 
@@ -39,7 +39,6 @@ usuarioctrl.show = async (req, res) => {
   }
 };
 
-// Crear una reserva
 usuarioctrl.store = async (req, res) => {
   const { nombre_usuario, correo, contraseña } = req.body; // Asegúrate de tener el campo "apellido" en la solicitud
 
@@ -64,7 +63,7 @@ usuarioctrl.store = async (req, res) => {
       .json(error.message || "Error interno del servidor");
   }
 };
-// Actualizar una reserva
+
 usuarioctrl.update = async (req, res) => {
   const UsuarioId = req.params.id;
   const { nombre_usuario, correo, contraseña } = req.body;
@@ -82,19 +81,23 @@ usuarioctrl.update = async (req, res) => {
       .json(error.message || "Error interno del servidor");
   }
 };
-// Eliminar una reserva de forma lógica
+
 usuarioctrl.destroy = async (req, res) => {
   const UsuarioId = req.params.id;
 
   try {
     const cuenta = await usuario.findByPk(UsuarioId);
-    await usuario.destroy({
-      where: {
-        id: UsuarioId,
-      },
-    });
 
-    return res.json({ cuenta, message: "Cuenta eliminada correctamente." });
+    if (!cuenta) {
+      throw {
+        status: 404,
+        message: "Usuario no encontrado.",
+      };
+    }
+
+    await cuenta.destroy();
+
+    return res.json({ message: "Cuenta eliminada correctamente." });
   } catch (error) {
     return res
       .status(error.status || 500)
@@ -102,7 +105,6 @@ usuarioctrl.destroy = async (req, res) => {
   }
 };
 
-// login
 usuarioctrl.login = async (req, res) => {
   const { correo, contraseña } = req.body;
 

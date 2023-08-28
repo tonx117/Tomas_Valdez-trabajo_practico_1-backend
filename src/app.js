@@ -4,13 +4,13 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const { body, validationResult } = require("express-validator");
+require("../api/models/relaciones.modelos");
 require("./database/config");
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
-
 //middlewares
 app.use(cors());
 app.use(helmet());
@@ -19,6 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //rutas
+
 app.use("/", require("../api/routes/usuario.routes"));
 app.use("/canciones", require("../api/routes/canciones.routes"));
 app.use("/playlist", require("../api/routes/playlist.routes"));
